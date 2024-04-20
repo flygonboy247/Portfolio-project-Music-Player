@@ -1,0 +1,48 @@
+package componets.MusicPlayer;
+
+public class MPUsecase1 {
+    public static void main(String[] args) {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        p.setSong("name", "Someone", "al");
+        p.setSong("lightup", "Beef", "reebum");
+        p.setSong("songname", "Sonny", "sonnyAlbum");
+        p.setSong("demons", "BigB", "SHEEEEESH");
+        //pretend the above code was already stored somewhere and you are now
+        //trying to access the information
+
+        //find a song named demons and find out singer and album its from
+        int num=p.getSongNumFromName("demons");
+        if(num!=-1){
+            String str = p.getsong(num);
+            System.out.println(str);
+        }else{
+            System.out.println("there is no song called demons in the playlist");
+        }
+        //Does the playlist have a song sung by reanna, and if so what
+        num=p.getLastSongNumFromAuthor("reanna");
+        if(num!=-1){
+            String str = p.getsong(num);
+            System.out.println(str);
+        }else{
+            System.out.println("there is no song sung by reanna in this
+                playlist");
+        }
+        //Does the playlist have a song sung by BigB, and if so what
+        num=p.getLastSongNumFromAuthor("reanna");
+        if(num!=-1){
+            String str = p.getsong(num);
+            System.out.println(str);
+        }else{
+            System.out.println("there is no song sung by BigB in this playlist");
+        }
+        //find author from song name
+        num=p.getSongNumFromName("demons");
+        if(num!=-1){
+            String str = p.getSongAuthor(num);
+            System.out.println(str);
+        }else{
+            System.out.println("there is no song called demons in the playlist");
+        }
+    }
+}

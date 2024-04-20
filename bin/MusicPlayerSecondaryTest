@@ -1,0 +1,55 @@
+ import static org.junit.Assert.assertEquals;
+ import static org.junit.Assert.assertNotEquals;
+import org.junit.Test;
+public class MusicPlayerSecondaryTest {
+    @Test
+    public void testShuffle() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        p.setSong("something2", "TaylorS2", "Tayloralbum2");
+        p.setSong("something3", "TaylorS3", "Tayloralbum3");
+        p.setSong("something4", "TaylorS4", "Tayloralbum4");
+        p.setSong("something5", "TaylorS5", "Tayloralbum5");
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        pCopy.setSong("something2", "TaylorS2", "Tayloralbum2");
+        pCopy.setSong("something3", "TaylorS3", "Tayloralbum3");
+        pCopy.setSong("something4", "TaylorS4", "Tayloralbum4");
+        pCopy.setSong("something5", "TaylorS5", "Tayloralbum5");
+        assertNotEquals(p,pCopy);
+    }
+    @Test
+    public void testSize() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        int x = p.size();
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals(x,1);
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void testToString() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        p.setSong("somethings", "TaylorSs", "Tayloralbums");
+        String str=p.toString();
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        pCopy.setSong("somethings", "TaylorSs", "Tayloralbums");
+        assertEquals("Song name: something Song author: TaylorS Song album:
+        Tayloralbum\nSong name: somethings Song author: TaylorSs Song album:
+        Tayloralbums",str);
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void equals() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        Boolean bool=p.equals(pCopy);
+        assertEquals(true, bool);
+        assertEquals(p,pCopy);
+    }
+}

@@ -1,0 +1,91 @@
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+public class MusicPlayer1Test {
+    @Test
+    public void testGetName() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals("something",p.getSongName(1));
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void testGetAuthor() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals("TaylorS",p.getSongAuthor(1));
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void testGetAlbum() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals("Tayloralbum",p.getSongAlbum(1));
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void getSong() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals("Song name: something Song author: TaylorS Song album:
+        Tayloralbum",p.getSong(1));
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void getLastSongNumFromalbum() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        int x=p.getLastSongNumFromalbum("Tayloralbum")
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals(1,x);
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void getLastSongNumFromAuthor() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        int x=p.getLastSongNumFromAuthor("TaylorS")
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals(1,x);
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void getSongNumFromName() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        int x=p.getSongNumFromName("something")
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals(1,x);
+        assertEquals(p,pCopy);
+    }
+    @Test
+    public void removeFirst() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        p.setSong("somethings", "TaylorSs", "Tayloralbums");
+        p.removeSong(2);
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("something", "TaylorS", "Tayloralbum");
+        assertEquals(p,pCopy);
+    }
+    public void removeSecond() {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        p.setSong("somethings", "TaylorSs", "Tayloralbums");
+        p.removeSong(1);
+        MusicPlayer pCopy = new MusicPlayer1();
+        pCopy.setSong("somethings", "TaylorSs", "Tayloralbums");
+        assertEquals(p,pCopy);
+    }
+}

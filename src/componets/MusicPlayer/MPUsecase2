@@ -1,0 +1,26 @@
+package componets.MusicPlayer;
+
+public class MPUsecase2 {
+    public static void main(String[] args) {
+        MusicPlayer p = new MusicPlayer1();
+        p.setSong("something", "TaylorS", "Tayloralbum");
+        p.setSong("name", "Someone", "al");
+        p.setSong("lightup", "Beef", "reebum");
+        p.setSong("songname", "Sonny", "sonnyAlbum");
+        p.setSong("demons", "BigB", "SHEEEEESH");
+        //pretend the above code was already stored somewhere and you are now
+        //trying to access the information
+
+        //favorite 5 songs, dont like demons that much anymore so replace
+        int num=p.getSongNumFromName("demons");
+        if(num!=-1){
+           p.removeSong(num);
+           p.setSong("newfav","newsinger","newalbum");
+        }else{
+            System.out.println("there is no song called demons in the playlist");
+        }
+        //print out list of favorite songs
+        String str = p.toString();
+        System.out.println(str);
+    }
+}

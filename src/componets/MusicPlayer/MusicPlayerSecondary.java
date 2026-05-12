@@ -1,35 +1,39 @@
 package componets.MusicPlayer;
 
-public interface MusicPlayerSecondary extends MusicPlayer {
+import java.util.Random;
 
-   /**
-     * idk why param is blue
+/**
+ * Secondary methods.
+ */
+public abstract class MusicPlayerSecondary implements MusicPlayer {
+
+    /**
      * @param author is th name of the author
      * @param album is th name of the album
      * @ensures songs in list are properly catagorized
      * @requires name, author, and album != null
      * @updates this
      */
-    public void shuffle(){
-        int size=this.getSize;
-        for(i=1;i<size*40;i++){
-            int k=i%size;
-            if(i%(size/6)==0){
-                setsong(getSongName(k),getSongAuthor(k),getSongAlbum(k));
-                removeSong(k);
-            }
+    @Override
+    public void shuffle() {
+
+        Random rand = new Random();
+
+        int size = this.size();
+
+        for (int i = 0; i < size * 5; i++) {
+
+            int k = rand.nextInt(size);
+
+            String name = this.getSongName(k);
+            String author = this.getSongAuthor(k);
+            String album = this.getSongAlbum(k);
+
+            this.removeSong(k);
+            this.setSong(name, author, album);
         }
     }
-    /**
-     * Reports size/legth of music list.
-     *
-     * @return the length of {@code this}
-     * @ensures length = |this|
-     */
-    @Override
-    public int size(){
-        return this.getSize();
-    }
+
     /**
      * Checks if 2 Songs are equal.
      *
@@ -38,19 +42,28 @@ public interface MusicPlayerSecondary extends MusicPlayer {
      * @ensures this = check
      */
     @Override
-    public Boolean equals(MusicPlayer check) {
-		Boolean equal =true;
-	    if(getSize()==check.getSize()){
-            for(int i=0;i<getSize();i++){
-                if(this.getsong(i).hashcode()!=check.getsong(i).hashcode()){
-                    equal=false;
-                }
-            }
-        }else{
-            equal = false;
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof MusicPlayer)) {
+            return false;
         }
-	    return equal;
+
+        MusicPlayer check = (MusicPlayer) obj;
+
+        if (this.size() != check.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.size(); i++) {
+
+            if (!this.getSong(i).equals(check.getSong(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
     /**
      * prints out a string for this.
      *
@@ -59,10 +72,13 @@ public interface MusicPlayerSecondary extends MusicPlayer {
      */
     @Override
     public String toString() {
-		String str="";
-	    for(int i=0;i<getSize();i++){
-            str=str+this.getsong(i)+"\n"
+
+        StringBuilder str = new StringBuilder();
+
+        for (int i = 0; i < this.size(); i++) {
+            str.append(this.getSong(i)).append("\n");
         }
-	    return str;
+
+        return str.toString();
     }
 }

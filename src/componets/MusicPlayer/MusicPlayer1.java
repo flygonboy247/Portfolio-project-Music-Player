@@ -1,6 +1,4 @@
 package componets.MusicPlayer;
-
-import components.standard;
 /**
 *    @convention no such thing as a empty MusicPlayer, if empty reamake it.
 *    ensure that all data in are strings and that they are not null.
@@ -16,249 +14,220 @@ import components.standard;
 
 public class MusicPlayer1 extends MusicPlayerSecondary{
     /**
-     * Representation of {@code this}.
+     * Song Node.
      */
     private final class Song {
         /**
-         * name of song.
+         * The name of the song.
          */
         private String name;
         /**
-         * name of author.
+         * The author of the song.
          */
         private String author;
         /**
-         * name of album.
+         * The album the song belongs to.
          */
         private String album;
         /**
-         * Next Song in singly linked list, or null.
+         * Reference to the next song in the list.
          */
         private Song next;
     }
+
     /**
-     * newest created Song.
-     */
-    private Song nSong;
-    /**
-     * oldest created Song.
+     * Front of list.
      */
     private Song back;
 
     /**
-     * Number of Songs in the music list, i.e., length = |this|.
+     * End of list.
+     */
+    private Song nSong;
+
+    /**
+     * Size.
      */
     private int length;
 
-    private void createNewRep() {
-		this.nSong = new Song();
-        this.nSong.next = null;
-        this.back = nSong;
+    /**
+     * Constructor.
+     */
+    public MusicPlayer1() {
+
+        this.back = null;
+        this.nSong = null;
         this.length = 0;
     }
+
     /*
-     * Standard methods -------------------------------------------------------
-     */
+    * Standard methods -------------------------------------------------------
+    */
 
-     @Override
-     public final NaturalNumber newInstance() {
-         try {
-             return this.getClass().getConstructor().newInstance();
-         } catch (ReflectiveOperationException e) {
-             throw new AssertionError(
-                     "Cannot construct object of type " + this.getClass());
-         }
-     }
-
-     @Override
-     public final void clear() {
-         this.createNewRep();
-     }
-
-     @Override
-     public final void transferFrom(MusicPlayer source) {
-         assert source != null : "Violation of: source is not null";
-         assert source != this : "Violation of: source is not this";
-         assert source instanceof NaturalNumber3 : ""
-                 + "Violation of: source is of dynamic type NaturalNumberExample";
-         /*
-          * This cast cannot fail since the assert above would have stopped
-          * execution in that case.
-          */
-         MusicPlayer1 localSource = (MusicPlayer1) source;
-         this.nSong = localSource.nSong;
-         this.back=localSource.back;
-         this.length=localSource.length;
-         this.Song=localSource.Song;
-         localSource.createNewRep();
-     }
-    /*
-     * Constructors -----------------------------------------------------------
-     */
-    // no argument constructor
-    public MusicPlayer() {
-        this.createNewRep();
+    @Override
+    public int size() {
+        return this.length;
     }
-    /*
-     * Kernel methods ---------------------------------------------------------
-     */
-    /**
-     * idk why param is blue
-     * @param name is th name of the song
-     * @param author is th name of the author
-     * @param album is th name of the album
-     * @ensures songs in list are properly catagorized
-     * @requires name, author, and album != null
-     * @updates this
-     *
-     */
-    public final void setSong(String name, String author, String album){
+
+    @Override
+    public void setSong(String name, String author, String album) {
+
         Song newSong = new Song();
-        Song old = this.nSong;
+
         newSong.name = name;
         newSong.author = author;
         newSong.album = album;
         newSong.next = null;
-        old.next = newSong;
-        this.nSong = newSong;
+
+        if (this.back == null) {
+
+            this.back = newSong;
+            this.nSong = newSong;
+
+        } else {
+
+            this.nSong.next = newSong;
+            this.nSong = newSong;
+        }
+
         this.length++;
     }
-    /**
-     *idk why param is blue
-     * @param songnum position of song in created list
-     * @requires songnum<this.length
-     * @updates this
-     */
-    public final void removeSong(int songNum){
-        Song back = this.back;
-        Song removed;
-        Song front;
-        if(songNum==1){
-            this.back=null;
-            this.nsong=null;
-        }else{
-            for(int i =1 ;i<songNum;i++){
-                back = back.next;
+
+    @Override
+    public void removeSong(int songNum) {
+
+        if (songNum < 0 || songNum >= this.length) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (songNum == 0) {
+
+            this.back = this.back.next;
+
+            if (this.back == null) {
+                this.nSong = null;
+            }
+
+        } else {
+
+            Song current = this.back;
+
+            for (int i = 0; i < songNum - 1; i++) {
+                current = current.next;
+            }
+
+            Song removed = current.next;
+
+            current.next = removed.next;
+
+            if (removed == this.nSong) {
+                this.nSong = current;
             }
         }
-        Song removed = back.next;
-        if(removed.next!=null){
-            Song front = removed.next;
-            back.next = front;
-        }else{
-            back.next = null;
-        }
+
         this.length--;
     }
-    /**
-     * idk why param is blue
-     * @param thing is the name of the song
-     * @ensures song name of this Song is the same as thing
-     * @requires thing != null
-     * @returns song num
-     */
-    public final int getSongNumFromName(String thing){
-        int num=-1;
-        Song check = this.back;
-        for(int i =1 ;i<=this.length;i++){
-            if(check.name.equals(thing)){
-                num=i;
+
+    @Override
+    public int getSongNumFromName(String thing) {
+
+        Song current = this.back;
+
+        int index = 0;
+
+        while (current != null) {
+
+            if (current.name.equals(thing)) {
+                return index;
             }
-            check=check.next;
+
+            current = current.next;
+            index++;
         }
-        return num;
+
+        return -1;
     }
-    /**
-     * idk why param is blue
-     * @param thing is the name of the song author
-     * @ensures author name of this Song is the same as thing
-     * @requires thing != null
-     * @returns song num of the last song entered from the author
-     */
-    public final int getLastSongNumFromAuthor(String thing){
-        int num=-1;
-        Song check = this.back;
-        for(int i =1 ;i<=this.length;i++){
-            if(check.author.equals(thing)){
-                num=i;
+
+    @Override
+    public int getLastSongNumFromAuthor(String thing) {
+
+        Song current = this.back;
+
+        int index = 0;
+        int found = -1;
+
+        while (current != null) {
+
+            if (current.author.equals(thing)) {
+                found = index;
             }
-            check=check.next;
+
+            current = current.next;
+            index++;
         }
-        return num;
+
+        return found;
     }
-    /**
-     * idk why param is blue
-     * @param thing is the name of the song's album
-     * @ensures album name of this Song is the same as thing
-     * @requires thing != null
-     * @returns song num of the last song entered from the album
-     */
-    public final int getLastSongNumFromalbum(String thing){
-        int num=-1;
-        Song check = this.back;
-        for(int i =1 ;i<=this.length;i++){
-            if(check.album.equals(thing)){
-                num=i;
+
+    @Override
+    public int getLastSongNumFromAlbum(String thing) {
+
+        Song current = this.back;
+
+        int index = 0;
+        int found = -1;
+
+        while (current != null) {
+
+            if (current.album.equals(thing)) {
+                found = index;
             }
-            check=check.next;
+
+            current = current.next;
+            index++;
         }
-        return num;
+
+        return found;
     }
+
     /**
-     * idk why param is blue
-     * @param songNum is the # order where the song data is stored
-     * @requires songnum<this.length
-     * @returns song name author and album all at once
+     * Returns node at position.
      */
-    public final String getSong(int songNum){
-        Song check = this.back;
-        for(int i =1 ;i<=songNum;i++){
-            check=check.next;
+    private Song nodeAt(int index) {
+
+        Song current = this.back;
+
+        for (int i = 0; i < index; i++) {
+            current = current.next;
         }
-        String songdata = "Song name: " + check.name + " Song author: " +
-        check.author + " Song album: "+check.album;
-        return songdata;
+
+        return current;
     }
-    /**
-     * idk why param is blue
-     * @param songNum is the # order where the song data is stored
-     * @requires songnum<this.length
-     * @returns song name at songnum
-     */
-    public final String getSongName(int songNum){
-        Song check = this.back;
-        for(int i =1 ;i<=songNum;i++){
-            check=check.next;
-        }
-        String songname = check.name;
-        return songname;
+
+    @Override
+    public String getSong(int songNum) {
+
+        Song s = this.nodeAt(songNum);
+
+        return "Song: " + s.name
+                + " | Author: " + s.author
+                + " | Album: " + s.album;
     }
-    /**
-     * idk why param is blue
-     * @param songNum is the # order where the song data is stored
-     * @requires songnum<this.length
-     * @returns song author at songnum
-     */
-    public final String getSongAuthor(int songNum){
-        Song check = this.back;
-        for(int i =1 ;i<=songNum;i++){
-            check=check.next;
-        }
-        String songauthor = check.author;
-        return songauthor;
+
+    @Override
+    public String getSongName(int songNum) {
+        return this.nodeAt(songNum).name;
     }
-    /**
-     * idk why param is blue
-     * @param songNum is the # order where the song data is stored
-     * @requires songnum<this.length
-     * @returns song album at songnum
-     */
-    public final String getSongAlbum(int songNum){
-        Song check = this.back;
-        for(int i =1 ;i<=songNum;i++){
-            check=check.next;
-        }
-        String songalbum = check.album;
-        return songalbum;
+
+    @Override
+    public String getSongAuthor(int songNum) {
+        return this.nodeAt(songNum).author;
     }
+
+    @Override
+    public String getSongAlbum(int songNum) {
+        return this.nodeAt(songNum).album;
+    }
+
+
 }
